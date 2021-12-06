@@ -46,7 +46,7 @@ class GitCommands():
 
             log = f"{dir} - {msg}"
             print(log)
-            self.log_file.write(log + "\n")
+            self.log_file.write(log + "\n\n" + output + "\n\n\n")
 
         self.log_file.close()
 
@@ -74,6 +74,7 @@ class GitCommands():
                 msg = f"Error: No folder named {self.correction_dir} was found"
                 folder_found = False
 
+            commit_output = ""
             if folder_found:
                 # check what was actually staged
                 modified = False
@@ -88,8 +89,13 @@ class GitCommands():
                 # commit and generate message
                 if len(committed_files) > 0:
                     commit_msg = f"{'Update ' if modified else ''}Korrektur Übung {number}"
-                    repo.commit("-m " + commit_msg)
-                    msg = f"Committed {'update for ' if modified else ''}{', '.join(committed_files)}"
+                    try:
+                        commit_output = repo.commit("-m " + commit_msg)
+                        msg = f"Committed {'update for ' if modified else ''}{', '.join(committed_files)}"
+                    except git.exc.GitCommandError as e:
+                        commit_output = str(e)
+                        if "error: Committing is not possible because you have unmerged files" in commit_output:
+                            msg = "Error: Merge in progress"
 
                 elif len(staged_files) > 0:
                     file_is_committed = False
@@ -109,7 +115,10 @@ class GitCommands():
 
             log = f"{dir} - {msg}"
             print(log)
-            self.log_file.write(log + "\n")
+            if commit_output:
+                self.log_file.write(log + "\n\n" + commit_output + "\n\n\n")
+            else:
+                self.log_file.write(log + "\n\n\n")
 
         self.log_file.close()
 
@@ -141,7 +150,7 @@ class GitCommands():
 
             log = f"{dir} - {msg}"
             print(log)
-            self.log_file.write(log + "\n")
+            self.log_file.write(log + "\n\n" + output + "\n\n\n")
 
         self.log_file.close()
 
@@ -159,6 +168,7 @@ class GitCommands():
 
             repo = git.cmd.Git(os.path.join(self.dir, dir))
 
+            status_full = repo.status()
             status = repo.status("--porcelain")
             try:
                 repo.restore(".")
@@ -181,7 +191,7 @@ class GitCommands():
 
             log = f"{dir} - {msg}"
             print(log)
-            self.log_file.write(log + "\n")
+            self.log_file.write(log + "\n\n" + status_full + "\n\n" + output_clean + "\n\n\n")
 
         self.log_file.close()
 

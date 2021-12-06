@@ -12,7 +12,7 @@ Die Korrekturen werden in einem separaten Order im Repository erwartet, welcher 
 
 Das Skript kann mit `python3` oder `python ` gestartet werden. Die Commands können etnweder direkt als Argument übergeben werden. Falls kein Argument übergeben wurde, oder es nicht erkannt wurde, kann man es nachträglich angeben.
 
-Alle Outputs werden zusätzlich als Log in einem Ordner `_logs` gespeichert.
+Alle Outputs werden zusätzlich als Log mit zusätzlichen Infos in einem Ordner `_logs` gespeichert.
 
 ## pull
 
@@ -48,7 +48,7 @@ Folgende Outputs können ausgegeben werden:
 
 ## push
 
-Hiermit können alle Commits gepusht werden. 
+Hiermit können alle Commits gepusht werden.
 
 ````
 python git_updates.py push
@@ -90,4 +90,3 @@ Folgende Outputs können ausgegeben werden:
 
 - *Mon Dec 6 21:53:10 2021, Sonja Studentin: LaTeX ergänzt*
 - *No commits yet*
-
