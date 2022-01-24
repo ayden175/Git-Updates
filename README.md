@@ -8,7 +8,7 @@ Für die Benutzung werden Python >= 3.7, Git >= 1.7 und [GitPython](https://gitp
 
 Das Skript muss standardmäßig im selben Ordner wie die Repositories liegen. Falls es in einem anderen Ordner liegen soll, kann der `dir` Parameter in der vorletzten Zeile angepasst werden um auf den Ordner mit den Repositories zu zeigen.
 
-Die Korrekturen werden in einem separaten Order im Repository erwartet, welcher standardmäßig `Korrekturen` heißt. Die Korrekturen müssen alle mit einem vorgegebenen Präfix benannt sein, standardmäßig `korrektur_`, die Dateiendung ist egal. Beides kann ebenfalls in der vorletzten Zeile durch die Parameter `correction_dir` und `correction_file_prefix` angepasst werden.
+Die Korrekturen werden in einem separaten Order im Repository erwartet, welcher standardmäßig `Korrekturen` heißt. Die Korrekturen müssen alle mit einem vorgegebenen Präfix benannt sein, standardmäßig `korrektur`, die Dateiendung ist egal. Beides kann ebenfalls in der vorletzten Zeile durch die Parameter `correction_dir` und `correction_file_prefix` angepasst werden.
 
 Das Skript kann mit `python3` oder `python ` gestartet werden. Die Commands können etnweder direkt als Argument übergeben werden. Falls kein Argument übergeben wurde, oder es nicht erkannt wurde, kann man es nachträglich angeben.
 
@@ -27,11 +27,12 @@ Folgende Outputs können ausgegeben werden:
 - *x file changed, y insertion(+), z deletions(-)*
 - *Error: Conflict with committed files*
 - *Error: Conflict with local files*
+- *Error: The repository could not be found or you don't have permission to view it*
 - *Error: No branch seems to be specified*
 
 ## commit
 
-Hiermit kann eine Korrektur für eine Übung gestaged und committet werden. In dem Beispiel unten werden alle Dateien `Korrekturen/korrektur_03.*` committet. Als Commit-Message wird "Korrektur Übung XX" oder "Update Korrektur Übung XX" genommen.
+Hiermit kann eine Korrektur für eine Übung gestaged und committet werden. In dem Beispiel unten werden alle Dateien `Korrekturen/korrektur03.*` committet. Als Commit-Message wird "Korrektur Übung XX" oder "Update Korrektur Übung XX" genommen.
 
 ````
 python git_updates.py commit 03
@@ -39,10 +40,10 @@ python git_updates.py commit 03
 
 Folgende Outputs können ausgegeben werden:
 
-- *Committed korrektur_03.txt, korrektur_03.pdf*
-- *Committed update for korrektur_03.txt, korrektur_03.pdf*
-- *Already committed korrektur_03.txt, korrektur_03.pdf*
-- *Already up to date: korrektur_03.txt, korrektur_03.pdf*
+- *Committed korrektur03.txt, korrektur03.pdf*
+- *Committed update for korrektur03.txt, korrektur03.pdf*
+- *Already committed korrektur03.txt, korrektur03.pdf*
+- *Already up to date: korrektur03.txt, korrektur03.pdf*
 - *Nothing to commit was found*
 - *Error: No folder named Korrekturen was found*
 

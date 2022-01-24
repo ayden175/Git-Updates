@@ -4,7 +4,7 @@ from datetime import datetime
 import git
 
 class GitCommands():
-    def __init__(self, command, dir=".", correction_dir="Korrekturen", correction_file_prefix="korrektur_"):
+    def __init__(self, command, dir=".", correction_dir="Korrekturen", correction_file_prefix="korrektur"):
         self.dir = dir
         self.correction_dir = correction_dir
         self.correction_file_prefix = correction_file_prefix
@@ -33,8 +33,10 @@ class GitCommands():
             if "Already up to date" in output:
                 msg = "Already up to date"
             elif "file changed, " in output or "files changed, " in output:
-                part = output.split("\n")
-                msg = part[-1][1:]
+                matched_lines = [line for line in output.split('\n') if "file changed, " in line or "files changed, " in line]
+                msg = matched_lines[0][1:]
+            elif "The project you were looking for could not be found" in output:
+                msg = "Error: The repository could not be found or you don't have permission to view it"
             elif "error: Pulling is not possible because you have unmerged files" in output:
                 msg = "Error: Conflict with committed files"
             elif "error: Your local changes" in output:
@@ -96,6 +98,10 @@ class GitCommands():
                         commit_output = str(e)
                         if "error: Committing is not possible because you have unmerged files" in commit_output:
                             msg = "Error: Merge in progress"
+                        elif "Please tell me who you are." in commit_output:
+                            msg = "Error: Commit email and name are not configured"
+                        else:
+                            msg = commit_output
 
                 elif len(staged_files) > 0:
                     file_is_committed = False
@@ -243,5 +249,5 @@ if __name__ == "__main__":
         else:
             args.append(input("Which correction do you want to commit?\n"))
 
-    git_commands = GitCommands(command=command, dir=".", correction_dir="Korrekturen", correction_file_prefix="korrektur_")
+    git_commands = GitCommands(command=command, dir=".", correction_dir="Korrekturen", correction_file_prefix="korrektur")
     getattr(git_commands, command)(*args)
