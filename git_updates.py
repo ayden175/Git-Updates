@@ -213,10 +213,12 @@ class GitCommands():
 
             try:
                 output = repo.show("-q")
-                lines = output.split("\n")
-                author = lines[1].split(" <")[0][8:]
-                date = lines[2].split(" +")[0][8:]
-                commit_msg = lines[4][4:]
+                lines = output.split("Author: ")[1].split("\n")
+                author = lines[0].split(" <")[0]
+                date = lines[1].split(" +")[0][8:]
+                commit_msg = lines[3].strip()
+                if "Merge branch" in commit_msg:
+                    commit_msg = "Merge branch"
 
                 msg = f"{date}, {author}: {commit_msg}"
 
@@ -225,7 +227,7 @@ class GitCommands():
 
             log = f"{dir} - {msg}"
             print(log)
-            self.log_file.write(log + "\n")
+            self.log_file.write(log + "\n" + output + "\n\n\n")
 
         self.log_file.close()
 
